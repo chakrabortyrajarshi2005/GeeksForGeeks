@@ -1,4 +1,3 @@
-# cook your dish here
 import sys
 
 input = sys.stdin.readline
@@ -52,7 +51,6 @@ def solve():
             m = n - 1
             out.append(str(C(2 * m, m, fact, invfact)))
             continue
-        # collect runs of consecutive '1's
         pos = []
         for i, ch in enumerate(s, start=1):
             if ch == '1':
@@ -68,8 +66,6 @@ def solve():
             i = j + 1
 
         ans = 1
-        # head and tail zero blocks contribute Catalan-like factors Z(L) = C(2*(L-1), L-1)
-        # Here implemented via factorial tables modulo mod
         head = runs[0][0] - 1
         if head >= 1:
             m0 = head - 1
@@ -78,13 +74,11 @@ def solve():
         if tail >= 1:
             m2 = tail - 1
             ans = ans * C(2 * m2, m2, fact, invfact) % mod
-        # internal gaps between runs also contribute Z(gap)
         for (l1, r1), (l2, r2) in zip(runs, runs[1:]):
             gap = l2 - r1 - 1
             if gap >= 1:
                 m1 = gap - 1
                 ans = ans * C(2 * m1, m1, fact, invfact) % mod
-        # per-run multiplicative factors
         for l, r in runs:
             k = r - l + 1
             if k == 1:
@@ -122,7 +116,6 @@ class Solution {
             Node *nextNode = nullptr;
             int count = 0;
 
-            // Reverse the nodes in the current group
             while (curr != nullptr && count < k) {
                 nextNode = curr->next;
                 curr->next = prev;
@@ -130,20 +123,14 @@ class Solution {
                 curr = nextNode;
                 count++;
             }
-
-            // If newHead is null, set it to the
-            // last node of the first group
             if (newHead == nullptr) {
                 newHead = prev;
             }
 
-            // Connect the previous group to the
-            // current reversed group
             if (tail != nullptr) {
                 tail->next = prev;
             }
 
-            // Move tail to the end of the reversed group
             tail = groupHead;
         }
 
